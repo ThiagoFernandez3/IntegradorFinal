@@ -23,7 +23,7 @@ while True:
             raise ValueError
         
         elif respuesta==1:
-            catalogo.agregar_pelicula
+            catalogo.agregar_peliculas()
             
         elif respuesta== 2:
             catalogo.lista_peliculas()

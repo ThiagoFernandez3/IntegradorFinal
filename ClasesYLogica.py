@@ -8,15 +8,15 @@ class Peliculas(ABC):
         return self.__nombre
     
     @abstractmethod
-    def agregar_pelicula(self):
+    def agregar_peliculas(self):
         pass
 
     @abstractmethod
-    def listar_peliculas(self):
+    def lista_peliculas(self):
         pass
 
     @abstractmethod
-    def eliminar_peliculas(self):
+    def eliminar_catalogo(self):
         pass
     
 class CatalogoPeliculas(Peliculas):
