@@ -1,45 +1,9 @@
-from abc import ABC, abstractmethod
+from ClasesYLogica import CatalogoPeliculas
 
-import os
-
-class Peliculas(ABC):
-    @abstractmethod
-    def __init__(self, nombre):
-        self._nombre = nombre + '.txt'
-        
-    def agregar_peliculas(self):
-        pass
-    
-    def lista_peliculas(self):
-        pass
-        
-    def eliminar_catalogo(self):
-        pass
-    
-class Catalogo_Peliculas(Peliculas):
-    def __init__(self, nombre):
-        super().__init__(nombre)
-    
-    def agregar_peliculas(self):
-        with open(self._nombre, 'a') as archivo:
-            archivo.write(input('Ingrese el nombre de la pelicula que quiere ingresar al catalogo\n-')+'\n').lower()
-            print('-Pelicula agregada al catalogo')
-    
-    def lista_peliculas(self):
-        print(f'-Lista del catalogo {self._nombre}:')
-        with open(self._nombre, 'r') as archivo:
-            for linea in archivo:
-                print(f'•{linea.strip()}')
-    
-    def eliminar_catalogo(self):
-        if os.path.exists(self._nombre):
-            os.remove(self._nombre)
-            print(f'-EL Catalogo {self._nombre} ha sido eliminado.')
-            
-print('Bienvenido a cuevana 2077 🎥')
+print('**Bienvenido a cuevana 2077 🎥**')
 while True:
     try:
-        nombreCatalogo= input('Ingrese el nombre del catalogo de peliculas que desea ver.\n-').lower().strip()
+        nombreCatalogo= input('Ingrese el nombre del catalogo de peliculas que desea ver.\n-').lower()
         if not nombreCatalogo.replace(" ", "").isalpha():
             raise ValueError
         else:
@@ -49,7 +13,7 @@ while True:
         print('Ingrese caracteres validos')
         continue
     
-catalogo = Catalogo_Peliculas(nombreCatalogo)
+catalogo = CatalogoPeliculas(nombreCatalogo)
 
 while True:
     try:
@@ -59,7 +23,7 @@ while True:
             raise ValueError
         
         elif respuesta==1:
-            catalogo.agregar_peliculas()
+            catalogo.agregar_pelicula
             
         elif respuesta== 2:
             catalogo.lista_peliculas()
