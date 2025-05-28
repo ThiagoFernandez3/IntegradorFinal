@@ -7,7 +7,7 @@ class Peliculas(ABC):
     def __init__(self, nombre):
         self._nombre = nombre + '.txt'
         
-    def agragar_peliculas(self):
+    def agregar_peliculas(self):
         pass
     
     def lista_peliculas(self):
@@ -20,7 +20,7 @@ class Catalogo_Peliculas(Peliculas):
     def __init__(self, nombre):
         super().__init__(nombre)
     
-    def agragar_peliculas(self):
+    def agregar_peliculas(self):
         with open(self._nombre, 'a') as archivo:
             archivo.write(input('Ingrese el nombre de la pelicula que quiere ingresar al catalogo\n-')+'\n').lower()
             print('-Pelicula agregada al catalogo')
@@ -59,7 +59,7 @@ while True:
             raise ValueError
         
         elif respuesta==1:
-            catalogo.agragar_peliculas()
+            catalogo.agregar_peliculas()
             
         elif respuesta== 2:
             catalogo.lista_peliculas()
