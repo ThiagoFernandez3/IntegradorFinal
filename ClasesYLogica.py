@@ -34,19 +34,19 @@ class CatalogoPeliculas(Peliculas):
         if not os.path.exists(self.ruta_archivo):
             with open(self.ruta_archivo, 'w') as archivo:
                 pass
-            registroHora(f"Se creó el catálogo '{self.nombre}'")
+            registroHora(f'Se creo el catalogo {self.nombre}')
         else:
-            registroHora(f"Se cargó el catálogo existente '{self.nombre}'")
+            registroHora(f'Se cargo el catalogo existente {self.nombre}')
             
     def agregar_peliculas(self):
         pelicula= input(f'\nIngrese el nombre de la pelicula que quiere ingresar al catalogo{self.nombre}.\n-').lower()
         with open(self.ruta_archivo, 'a') as archivo:
             archivo.write(pelicula+'\n')
-        registroHora(f'Se agregó la película {pelicula} al catálogo {self.nombre}')
+        registroHora(f'Se agrego la película {pelicula} al catálogo {self.nombre}')
         print('\n-Pelicula agregada al catalogo ✅.')
     
     def lista_peliculas(self):
-        registroHora(f'Se listaron las películas del catálogo {self.nombre}')
+        registroHora(f'Se listaron las peliculas del catalogo {self.nombre}')
         print(f'\n-Lista del catalogo {self.nombre}:')
         with open(self.ruta_archivo, 'r') as archivo:
             for linea in archivo:
@@ -55,6 +55,6 @@ class CatalogoPeliculas(Peliculas):
     def eliminar_catalogo(self):
         if os.path.exists(self.ruta_archivo):
             os.remove(self.ruta_archivo)
-            registroHora(f"Se eliminó el catálogo '{self.nombre}'")
+            registroHora(f'Se elimino el catalogo {self.nombre}')
             print(f'-EL Catalogo {self.nombre} ha sido eliminado.')
             
