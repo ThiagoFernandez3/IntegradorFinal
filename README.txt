@@ -2,7 +2,8 @@ README.txt
 
 # Catálogo de Películas - Cuevana 2077 🎥
 
-Este proyecto en Python permite crear y gestionar un catálogo de películas de forma interactiva desde la terminal. El sistema está dividido en dos archivos:
+Este proyecto en Python permite crear y gestionar un catálogo de películas de forma interactiva desde la terminal.
+El sistema está dividido en dos archivos:
 
 ---
 
@@ -20,7 +21,7 @@ Contiene la lógica de negocio implementada mediante Programación Orientada a O
   - **Agregar películas**: Añade títulos ingresados por el usuario a un archivo `.txt`.
   - **Listar películas**: Muestra todas las películas en el catálogo.
   - **Eliminar catálogo**: Borra el archivo del catálogo.
-
+- La funcion ´registroHora´ guarda en un archivo ´.txt´ la hora y la accion realizado.
 ---
 
 ### 2. `Thiago_Fernandez.py`
@@ -40,10 +41,7 @@ Archivo principal que ejecuta el programa.
 ## Cómo ejecutar
 
 1. Asegúrate de tener Python 3 instalado.
-2. Ejecuta el archivo `Thiago_Fernandez.py` desde la terminal:
-   ```bash
-   python Thiago_Fernandez.py
-   ```
+2. Ejecuta el archivo `Thiago_Fernandez.py`.
 3. Sigue las instrucciones en pantalla.
 
 ---
@@ -57,8 +55,3 @@ Archivo principal que ejecuta el programa.
 ## Versión con Interfaz Gráfica
 
 Si prefieres una experiencia visual, prueba el archivo `Catalogo_Interfaz.py`, que ofrece la misma funcionalidad en una ventana interactiva usando la librería Tkinter.
-
-Para ejecutar:
-```bash
-python Catalogo_Peliculas_GUI.py
-```
