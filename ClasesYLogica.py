@@ -27,10 +27,15 @@ class Peliculas(ABC):
     def eliminar_catalogo(self):
         pass
     
+    @abstractmethod
+    def leer_registro(self):
+        pass
+    
 class CatalogoPeliculas(Peliculas):
     def __init__(self, nombreCatalogo):
         self.nombre = nombreCatalogo
         self.ruta_archivo = nombreCatalogo + '.txt'
+        
         if not os.path.exists(self.ruta_archivo):
             with open(self.ruta_archivo, 'w') as archivo:
                 pass
@@ -39,7 +44,7 @@ class CatalogoPeliculas(Peliculas):
             registroHora(f'Se cargo el catalogo existente {self.nombre}')
             
     def agregar_peliculas(self):
-        pelicula= input(f'\nIngrese el nombre de la pelicula que quiere ingresar al catalogo{self.nombre}.\n-').lower()
+        pelicula= input(f'\nIngrese el nombre de la pelicula que quiere ingresar al catalogo {self.nombre}.\n-').lower()
         with open(self.ruta_archivo, 'a') as archivo:
             archivo.write(pelicula+'\n')
         registroHora(f'Se agrego la película {pelicula} al catálogo {self.nombre}')
@@ -57,4 +62,10 @@ class CatalogoPeliculas(Peliculas):
             os.remove(self.ruta_archivo)
             registroHora(f'Se elimino el catalogo {self.nombre}')
             print(f'-EL Catalogo {self.nombre} ha sido eliminado.')
+            
+    def leer_registro(self):
+        print('\n-Registro de acciones:')
+        with open('registro.txt', 'r') as registro:
+            for linea in registro:
+                print(linea)
             
