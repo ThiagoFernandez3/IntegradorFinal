@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import messagebox, simpledialog
-from ClasesYLogica import CatalogoPeliculas
+from tkinter import messagebox, simpledialog, scrolledtext
+from ClasesYLogica import CatalogoPeliculas, registroHora
+import os
 
 class CatalogoApp:
     def __init__(self, root):
@@ -8,56 +9,91 @@ class CatalogoApp:
         self.root.title("Cuevana 2077 - Catálogo de Películas")
         self.catalogo = None
 
-        self.label = tk.Label(root, text="Ingrese el nombre del catálogo:")
-        self.label.pack(pady=5)
+        self.label = tk.Label(root, text="Nombre del catálogo:")
+        self.label.pack()
 
-        self.entry_nombre = tk.Entry(root)
-        self.entry_nombre.pack(pady=5)
+        self.entrada = tk.Entry(root)
+        self.entrada.pack()
 
-        self.btn_iniciar = tk.Button(root, text="Iniciar Catálogo", command=self.iniciar_catalogo)
-        self.btn_iniciar.pack(pady=5)
+        self.btn_cargar = tk.Button(root, text="Crear/Cargar Catálogo", command=self.crear_catalogo)
+        self.btn_cargar.pack(pady=5)
 
-        self.frame_opciones = tk.Frame(root)
+        self.frame_botones = tk.Frame(root)
+        self.frame_botones.pack(pady=10)
 
-    def iniciar_catalogo(self):
-        nombre = self.entry_nombre.get().strip().lower()
+        self.btn_agregar = tk.Button(self.frame_botones, text="Agregar Película", command=self.agregar_pelicula, state="disabled")
+        self.btn_agregar.grid(row=0, column=0, padx=5)
+
+        self.btn_listar = tk.Button(self.frame_botones, text="Listar Películas", command=self.listar_peliculas, state="disabled")
+        self.btn_listar.grid(row=0, column=1, padx=5)
+
+        self.btn_eliminar = tk.Button(self.frame_botones, text="Eliminar Catálogo", command=self.eliminar_catalogo, state="disabled")
+        self.btn_eliminar.grid(row=0, column=2, padx=5)
+
+        self.btn_registro = tk.Button(self.frame_botones, text="Ver Registro", command=self.ver_registro, state="disabled")
+        self.btn_registro.grid(row=0, column=3, padx=5)
+
+        self.resultado = scrolledtext.ScrolledText(root, width=60, height=15)
+        self.resultado.pack(pady=10)
+
+        registroHora("Se inició la interfaz gráfica.")
+
+    def crear_catalogo(self):
+        nombre = self.entrada.get().strip()
         if not nombre.replace(" ", "").isalpha():
-            messagebox.showerror("Error", "Ingrese un nombre válido para el catálogo.")
+            messagebox.showerror("Error", "Nombre inválido. Solo letras.")
             return
-
         self.catalogo = CatalogoPeliculas(nombre)
-        self.label.config(text=f"Catálogo: {nombre}")
-        self.entry_nombre.pack_forget()
-        self.btn_iniciar.pack_forget()
+        self.resultado.insert(tk.END, f"Catálogo '{nombre}' listo.\n")
+        self.activar_botones()
 
-        self.frame_opciones.pack(pady=10)
-        tk.Button(self.frame_opciones, text="Agregar Película", command=self.agregar_pelicula).pack(fill='x')
-        tk.Button(self.frame_opciones, text="Ver Lista", command=self.ver_lista).pack(fill='x')
-        tk.Button(self.frame_opciones, text="Eliminar Catálogo", command=self.eliminar_catalogo).pack(fill='x')
-        tk.Button(self.frame_opciones, text="Salir", command=self.root.quit).pack(fill='x')
+    def activar_botones(self):
+        self.btn_agregar.config(state="normal")
+        self.btn_listar.config(state="normal")
+        self.btn_eliminar.config(state="normal")
+        self.btn_registro.config(state="normal")
 
     def agregar_pelicula(self):
-        pelicula = simpledialog.askstring("Agregar Película", "Nombre de la película:")
-        if pelicula:
+        if not self.catalogo:
+            return
+        nombre = simpledialog.askstring("Agregar Película", "Nombre de la película:")
+        if nombre:
             with open(self.catalogo.ruta_archivo, 'a') as archivo:
-                archivo.write(pelicula.strip().lower() + '\n')
-            messagebox.showinfo("Éxito", "Película agregada al catálogo.")
+                archivo.write(nombre.strip().lower() + '\n')
+            registroHora(f"Se agregó la película '{nombre}' al catálogo '{self.catalogo.nombre}'")
+            self.resultado.insert(tk.END, f"Película '{nombre}' agregada.\n")
 
-    def ver_lista(self):
+    def listar_peliculas(self):
+        if not self.catalogo:
+            return
+        self.resultado.insert(tk.END, f"\n--- Catálogo '{self.catalogo.nombre}' ---\n")
         try:
             with open(self.catalogo.ruta_archivo, 'r') as archivo:
                 peliculas = archivo.readlines()
-            lista = "\n".join([f"- {p.strip()}" for p in peliculas])
-            messagebox.showinfo("Lista de Películas", lista if lista else "Catálogo vacío.")
+                for p in peliculas:
+                    self.resultado.insert(tk.END, f"• {p.strip()}\n")
+            registroHora(f"Se listaron las películas del catálogo '{self.catalogo.nombre}'")
         except FileNotFoundError:
-            messagebox.showerror("Error", "El catálogo no existe.")
+            messagebox.showerror("Error", "Catálogo no encontrado.")
 
     def eliminar_catalogo(self):
-        confirm = messagebox.askyesno("Eliminar", "¿Estás seguro de eliminar el catálogo?")
+        if not self.catalogo:
+            return
+        confirm = messagebox.askyesno("Confirmar", "¿Seguro que desea eliminar el catálogo?")
         if confirm:
-            self.catalogo.eliminar_catalogo()
-            messagebox.showinfo("Eliminado", "Catálogo eliminado.")
-            self.root.quit()
+            if os.path.exists(self.catalogo.ruta_archivo):
+                os.remove(self.catalogo.ruta_archivo)
+                registroHora(f"Se eliminó el catálogo '{self.catalogo.nombre}'")
+                self.resultado.insert(tk.END, f"Catálogo '{self.catalogo.nombre}' eliminado.\n")
+
+    def ver_registro(self):
+        if not os.path.exists("registro.txt"):
+            messagebox.showinfo("Registro", "Aún no hay registro de acciones.")
+            return
+        self.resultado.insert(tk.END, "\n--- Registro de acciones ---\n")
+        with open("registro.txt", 'r') as archivo:
+            for linea in archivo:
+                self.resultado.insert(tk.END, linea)
 
 if __name__ == "__main__":
     root = tk.Tk()

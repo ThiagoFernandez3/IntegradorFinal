@@ -64,6 +64,7 @@ class CatalogoPeliculas(Peliculas):
             print(f'-EL Catalogo {self.nombre} ha sido eliminado.')
             
     def leer_registro(self):
+        registroHora(f'Se abrio el registro.')
         print('\n-Registro de acciones:')
         with open('registro.txt', 'r') as registro:
             for linea in registro:
