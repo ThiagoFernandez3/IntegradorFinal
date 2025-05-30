@@ -1,57 +1,46 @@
-README.txt
+==============================
+ PROYECTO: Catálogo de Películas
+==============================
 
-# Catálogo de Películas - Cuevana 2077 🎥
+🎯 DESCRIPCIÓN
+---------------
+Este programa permite gestionar un catálogo de películas con una interfaz gráfica construida con Tkinter.
+ Se pueden crear catálogos, agregar películas, listarlas, eliminarlas y ver un historial de acciones.
 
-Este proyecto en Python permite crear y gestionar un catálogo de películas de forma interactiva desde la terminal.
-El sistema está dividido en dos archivos:
+🧩 FUNCIONALIDADES
+-------------------
+- Crear o cargar un catálogo .txt ingresando su nombre.
+- Agregar películas al catálogo.
+- Ver la lista de películas agregadas.
+- Eliminar el catálogo completo.
+- Ver el historial de acciones con fecha y hora.
 
----
+📁 ESTRUCTURA DE ARCHIVOS
+---------------------------
+- `ClasesYLogica.py`: contiene la lógica principal (clases y funciones).
+- `Thiago_Fernandez.py`: versión por consola.
+- `interfaz.py`: interfaz gráfica con botones y vista de registros.
+- `registro.txt`: archivo generado automáticamente que guarda cada acción con hora.
 
-## Archivos
+📌 REGISTRO DE ACCIONES
+-------------------------
+Cada vez que se realiza una acción, se guarda en el archivo `registro.txt` con formato:
+    [YYYY-MM-DD HH:MM] Descripción de la acción
 
-### 1. `ClasesYLogica.py`
+✅ EJEMPLO DE REGISTRO:
+    [2025-05-28 18:33] Se creó el catálogo 'peliculas'
+    [2025-05-28 18:34] Se agregó la película 'matrix' al catálogo 'peliculas'
 
-Contiene la lógica de negocio implementada mediante Programación Orientada a Objetos (POO).
+▶️ EJECUCIÓN DEL PROGRAMA
+---------------------------
+Para la interfaz gráfica:
 
-- Define una clase abstracta `Peliculas` con métodos que deben ser implementados:
-  - `agregar_peliculas()`
-  - `lista_peliculas()`
-  - `eliminar_catalogo()`
-- La clase `CatalogoPeliculas` hereda de `Peliculas` e implementa estos métodos:
-  - **Agregar películas**: Añade títulos ingresados por el usuario a un archivo `.txt`.
-  - **Listar películas**: Muestra todas las películas en el catálogo.
-  - **Eliminar catálogo**: Borra el archivo del catálogo.
-- La funcion ´registroHora´ guarda en un archivo ´.txt´ la hora y la accion realizado.
----
+Catalogo_Interfaz.py
 
-### 2. `Thiago_Fernandez.py`
+Para la versión por consola:
 
-Archivo principal que ejecuta el programa.
+Thiago_Fernandez.py
 
-- Solicita al usuario un nombre para el catálogo (se usará como nombre de archivo).
-- Muestra un menú con las siguientes opciones:
-  1. Agregar películas al catálogo.
-  2. Ver la lista de películas en el catálogo.
-  3. Eliminar el catálogo.
-  4. Salir del programa.
-- Valida entradas del usuario y maneja errores comunes como caracteres no válidos o elecciones fuera de rango.
-
----
-
-## Cómo ejecutar
-
-1. Asegúrate de tener Python 3 instalado.
-2. Ejecuta el archivo `Thiago_Fernandez.py`.
-3. Sigue las instrucciones en pantalla.
-
----
-
-## Notas
-
-- Los catálogos se guardan como archivos `.txt` en el mismo directorio del script.
-- El nombre del catálogo no debe incluir números ni caracteres especiales.
-- Se recomienda ejecutar ambos archivos en el mismo directorio para evitar errores de importación.---
-
-## Versión con Interfaz Gráfica
-
-Si prefieres una experiencia visual, prueba el archivo `Catalogo_Interfaz.py`, que ofrece la misma funcionalidad en una ventana interactiva usando la librería Tkinter.
+✍️ AUTOR
+---------
+Thiago Fernández
